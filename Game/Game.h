@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include <atomic>
 
 struct TickStats
 {
@@ -10,5 +11,5 @@ struct TickStats
 TickStats getTickStats();
 void gameTick(Player players[], int playerCount, const float tickInterval);
 void calculateTick(Player players[]);
-void gameLoop(Player players[], bool& gameRunning);
+void gameLoop(Player players[], std::atomic<bool>& gameRunning);
 void showTickrate();

@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include <atomic>
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -72,7 +72,7 @@ void calculateTick(Player players[]) {
     this_thread::sleep_for(chrono::milliseconds(1));
 }
 
-void gameLoop(Player players[], bool& gameRunning){
+void gameLoop(Player players[], std::atomic<bool>& gameRunning){
     while (gameRunning){
         calculateTick(players);
     }

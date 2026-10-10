@@ -7,7 +7,7 @@
 using namespace std;
 
 
-void mainMenu(Player players[], bool& gameRunning) {
+void mainMenu(Player players[], std::atomic<bool>& gameRunning) {
     while (gameRunning == true) {
         cout << " " << endl;
         cout << "====== Counter-Strike 2 ======\n" << endl;

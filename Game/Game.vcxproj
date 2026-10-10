@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -143,14 +143,19 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Render.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Render.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="README.txt" />
+    <Text Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\..\..\..\Desktop\yourCalendar\frontend\fonts\Jonova-Regular.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

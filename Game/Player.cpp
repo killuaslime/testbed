@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <mutex>
+#include <atomic>
 using namespace std;
 mutex playerMutex;
 
@@ -12,6 +13,12 @@ void updatePosition(Player& player, const float tickInterval)
     player.position.x += player.velocity.x * tickInterval;
     player.position.y += player.velocity.y * tickInterval;
     player.position.z += player.velocity.z * tickInterval;
+    if (player.position.x >= 1920) {
+        player.position.x = 100;
+    }
+    else if (player.position.y >= 1080) {
+        player.position.y = 100;
+    }
 }
 
 
@@ -26,6 +33,9 @@ void takeDamage(Player& player, int damage)
     {
         player.health = 0;
         player.isAlive = false;
+        player.position.x = 0;
+        player.position.y = 0;
+
     }
 }
 
