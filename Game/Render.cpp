@@ -11,18 +11,20 @@ Renderer::Renderer(int width, int height)
 
 void Renderer::render(const Player players[], int playerCount, std::atomic<bool>& gameRunning){
     sf::Font font;
-    if (!font.openFromFile("Jonova-Regular.ttf")) {
+    if (!font.openFromFile("assets/fonts/Jonova-Regular.ttf")) {
         std::cout << "Не удалось загрузить шрифт\n";
         return;
     }
     sf::Texture mapTexture;
-    if (!mapTexture.loadFromFile("de_mirage.png"))
+    if (!mapTexture.loadFromFile("assets/maps/de_mirage.png"))
     {
         std::cerr << "Не удалось загрузить карту!\n";
         return;
     }
-
+    sf::RectangleShape square({ 1024.f, 1024.f });
     sf::Sprite mapSprite(mapTexture);
+
+
 
     sf::Text fpstxt(font);
     sf::Text ticktxt(font);
@@ -64,6 +66,7 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         // =========================
         // Отрисовка игроков
         // =========================
+        window.draw(square);
         window.draw(mapSprite);
         for (int i = 0; i < playerCount; i++) {
             bool alive;
@@ -86,10 +89,10 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
                 continue;
             sf::Text nametxt(font);
             nametxt.setString(name);
-            nametxt.setCharacterSize(30);
+            nametxt.setCharacterSize(15);
             nametxt.setFillColor(sf::Color::White);
-            nametxt.setPosition({ x, y+50.f });
-            sf::CircleShape playerShape(10.f);
+            nametxt.setPosition({ x-35.0f, y});
+            sf::CircleShape playerShape(8.f);
             if (team == "CT") {
                 playerShape.setFillColor(sf::Color::Blue);
             }

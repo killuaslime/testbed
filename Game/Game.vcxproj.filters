@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Файлы ресурсов\assets">
-      <UniqueIdentifier>{4d8384f4-dd4d-46fa-8939-241805048c74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы ресурсов\fonts">
-      <UniqueIdentifier>{31a88059-f04b-4ae3-b1ff-54098b8901a7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -36,6 +30,9 @@
     <ClCompile Include="Render.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="SpawnManager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -50,18 +47,21 @@
     <ClInclude Include="Render.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="SpawnPoint.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnManager.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="..\..\..\..\Desktop\yourCalendar\frontend\fonts\Jonova-Regular.ttf">
-      <Filter>Файлы ресурсов\fonts</Filter>
-    </Font>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\Desktop\de_mirage.png">
-      <Filter>Файлы ресурсов\assets</Filter>
+    <Image Include="assets\maps\de_mirage.png">
+      <Filter>Файлы заголовков</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\Jonova-Regular.ttf">
+      <Filter>Файлы заголовков</Filter>
+    </Font>
   </ItemGroup>
 </Project>
