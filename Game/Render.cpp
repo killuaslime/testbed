@@ -10,6 +10,7 @@ Renderer::Renderer(int width, int height)
 }
 
 void Renderer::render(const Player players[], int playerCount, std::atomic<bool>& gameRunning){
+
     sf::Font font;
     if (!font.openFromFile("assets/fonts/Jonova-Regular.ttf")) {
         std::cout << "Не удалось загрузить шрифт\n";
@@ -21,7 +22,7 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         std::cerr << "Не удалось загрузить карту!\n";
         return;
     }
-    sf::RectangleShape square({ 1024.f, 1024.f });
+
     sf::Sprite mapSprite(mapTexture);
 
 
@@ -66,8 +67,9 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         // =========================
         // Отрисовка игроков
         // =========================
-        window.draw(square);
-        window.draw(mapSprite);
+
+        window.draw(mapSprite); /* отрисовка de_mirage.png */
+
         for (int i = 0; i < playerCount; i++) {
             bool alive;
             float x;
