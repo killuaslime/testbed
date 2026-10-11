@@ -15,6 +15,14 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         std::cout << "Не удалось загрузить шрифт\n";
         return;
     }
+    sf::Texture mapTexture;
+    if (!mapTexture.loadFromFile("de_mirage.png"))
+    {
+        std::cerr << "Не удалось загрузить карту!\n";
+        return;
+    }
+
+    sf::Sprite mapSprite(mapTexture);
 
     sf::Text fpstxt(font);
     sf::Text ticktxt(font);
@@ -56,6 +64,7 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         // =========================
         // Отрисовка игроков
         // =========================
+        window.draw(mapSprite);
         for (int i = 0; i < playerCount; i++) {
             bool alive;
             float x;

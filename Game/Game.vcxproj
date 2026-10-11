@@ -157,6 +157,9 @@
   <ItemGroup>
     <Font Include="..\..\..\..\Desktop\yourCalendar\frontend\fonts\Jonova-Regular.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Desktop\de_mirage.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -7,7 +7,7 @@
 using namespace std;
 std::mutex statsMutex;
 
-const float tickRate = 64.0f;
+const float tickRate = 128.0f;
 const float tickInterval = 1.0f / tickRate;
 
 int tick = 0;
