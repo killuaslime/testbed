@@ -16,7 +16,7 @@ SpawnManager spawnManager;
 int main(){
     Player players[10];
 
-    players[0] = { "autostrafe. asaka", "CT", 100, {0, 0, 0},{0, 10, 0},{0, 0, 0}, 10,true };
+    players[0] = { "autostrafe. asaka", "CT", 100, {0, 0, 0},{0, 0, 0},{0, 0, 0}, 10,true };
     players[1] = { "gospodispasi Faqit", "CT", 100, {0, 0, 0},{0, 0, 0},{0, 0, 0}, 10,true };
     players[2] = { "Senpen Banka", "CT", 100, {0, 0, 0},{0, 0, 0},{0, 0, 0}, 15,true };
     players[3] = { "Munkao", "CT", 100, {0, 0, 0},{0, 0, 0},{0, 0, 0}, 20,true };

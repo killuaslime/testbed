@@ -1,5 +1,6 @@
 #include "Render.h"
 #include "Player.h"
+#include"Button.h"
 #include <iostream>
 #include <atomic>
 #include <deque>
@@ -23,8 +24,10 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         return;
     }
 
-    sf::Sprite mapSprite(mapTexture);
+    sf::Sprite mapSprite(mapTexture); /*создание de_mirage sprite */
 
+    Button start("Start", { 1024.0f, 500.0f }, { 200.0f,60.0f }, font);
+    Button quit("Quit", { 1024.0f, 565.0f }, { 200.0f,60.0f }, font);
 
 
     sf::Text fpstxt(font);
@@ -34,6 +37,14 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
     std::deque<float> fpsHistory;
     float currentFPS = 0.0f;
     while (gameRunning) {
+        // =========================
+        // Обработка кнопок при наведении
+        // =========================
+        sf::Vector2i mousePixel = sf::Mouse::getPosition(window);
+        sf::Vector2f mousePosition = window.mapPixelToCoords(mousePixel);
+        start.update(mousePosition);
+        quit.update(mousePosition);
+
 
         // =========================
         // Подсчет FPS, считаем среднее за 60 кадров
@@ -69,7 +80,8 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         // =========================
 
         window.draw(mapSprite); /* отрисовка de_mirage.png */
-
+        start.draw(window);
+        quit.draw(window);
         for (int i = 0; i < playerCount; i++) {
             bool alive;
             float x;

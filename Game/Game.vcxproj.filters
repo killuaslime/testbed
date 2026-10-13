@@ -33,6 +33,9 @@
     <ClCompile Include="SpawnManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -53,15 +56,18 @@
     <ClInclude Include="SpawnManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="assets\maps\de_mirage.png">
+    <ClInclude Include="Button.h">
       <Filter>Файлы заголовков</Filter>
-    </Image>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\Jonova-Regular.ttf">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы ресурсов</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\maps\de_mirage.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>
