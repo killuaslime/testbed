@@ -73,7 +73,7 @@ void playersMenu(Player players[]) {
         int key = _getch();
         switch (key) {
         case '1': {
-            for (int i = 0; i < 5;i++) {
+            for (int i = 0; i < 10;i++) {
                 showPlayer(players[i]);
             }
             break;
@@ -82,7 +82,7 @@ void playersMenu(Player players[]) {
             int i;
             cout << "Choose players: ";
             cin >> i;
-            if (i < 1 || i > 5)
+            if (i < 1 || i > 10)
             {
                 cout << "Invalid player!" << endl;
                 break;
@@ -115,7 +115,7 @@ void damageMenu(Player players[]) {
             cout << "Choose players: ";
             cin >> i;
 
-            if (i < 1 || i > 5)
+            if (i < 1 || i > 10)
             {
                 cout << "Invalid player!" << endl;
                 break;
@@ -133,7 +133,7 @@ void damageMenu(Player players[]) {
             int i;
             cout << "Choose players: ";
             cin >> i;
-            if (i < 1 || i > 5)
+            if (i < 1 || i > 10)
             {
                 cout << "Invalid player!" << endl;
                 break;
@@ -150,7 +150,7 @@ void damageMenu(Player players[]) {
             int i;
             cout << "Choose players: ";
             cin >> i;
-            if (i < 1 || i > 5)
+            if (i < 1 || i > 10)
             {
                 cout << "Invalid player!" << endl;
                 break;
@@ -160,7 +160,11 @@ void damageMenu(Player players[]) {
                 cout << " " << endl;
                 lock_guard<mutex> lock(playerMutex);
                 cout << "Health: " << players[i - 1].health << endl;
+                
             }
+
+
+            
             break;
         }
         case 27:
@@ -201,7 +205,7 @@ void movementMenu(Player players[]) {
                 cout << "Select player: ";
                 int newPlayer;
                 cin >> newPlayer;
-                if (newPlayer < 1 || newPlayer > 5)
+                if (newPlayer < 1 || newPlayer > 10)
                 {
                     cout << " " << endl;
                     cout << "Invalid player!" << endl;

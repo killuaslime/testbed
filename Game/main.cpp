@@ -30,16 +30,16 @@ int main(){
         spawnManager.spawnPlayer(players[i], i % 5);
     }
     std::atomic<bool> gameRunning = true;
+    MatchScore score;
 
-    std::thread gameThread(gameLoop, players, std::ref(gameRunning));
+    std::thread gameThread(gameLoop, players, std::ref(gameRunning),std::ref(score));
     //std::thread menuThread(mainMenu, players, std::ref(gameRunning));
 
-    std::thread renderThread([&](){Renderer renderer(1920, 1080);renderer.render(players,10,gameRunning);});
+    std::thread renderThread([&]() {Renderer renderer(1920, 1080);renderer.render(players, 10, gameRunning,score);});
 
     gameThread.join();
     //menuThread.join();
     renderThread.join();
-
 
     return 0;
 }

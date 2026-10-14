@@ -5,7 +5,10 @@
 #include <thread>
 #include <mutex>
 using namespace std;
+
 std::mutex statsMutex;
+std::mutex roundsMutex;
+
 
 const float tickRate = 128.0f;
 const float tickInterval = 1.0f / tickRate;
@@ -16,17 +19,50 @@ int ticksProcessed = 0;
 auto previous = chrono::steady_clock::now();
 auto statStart = chrono::steady_clock::now();
 
-void gameTick(Player players[], int playerCount, const float tickInterval) {
+void gameTick(Player players[], int playerCount, const float tickInterval, MatchScore& score) {
     for (int i = 0; i < playerCount;i++) {
 
         updatePosition(players[i], tickInterval);
+
         // Здесь позже будут:
         // столкновения
         // урон
         // смерть
         // и т.д.
     }
+    updateRound(players,playerCount, score);
 }
+
+RoundResult checkRoundResult(const Player players[], int playerCount)
+{
+    int aliveCT = 0;
+    int aliveT = 0;
+
+    lock_guard<mutex> lock(playerMutex);
+    for (int i = 0; i < playerCount; i++) {
+        if (players[i].isAlive && players[i].team == "CT") {
+            aliveCT++;
+        }
+        if (players[i].isAlive && players[i].team == "T") {
+            aliveT++;
+        }
+    }
+    if (aliveCT == 0 && aliveT == 0) {
+        return RoundResult::Draw;
+        
+
+    }
+    else if (aliveCT > 0 && aliveT == 0) {
+        return RoundResult::CTwin;
+    }
+    else if (aliveCT == 0 && aliveT > 0) {
+        return RoundResult::Twin;
+    }
+    else return RoundResult::Ongoing;
+
+}
+
+
 void showTickrate()
 {
     TickStats stats = getTickStats();
@@ -37,18 +73,21 @@ void showTickrate()
     cout << "Elapsed time: " << stats.elapsedTime << endl;
     cout << "Actual Tickrate: " << stats.actualTickrate << endl;
 }
+
 TickStats lastTickStats{};
+
 TickStats getTickStats(){
     lock_guard<mutex> lock(statsMutex);
     return lastTickStats;
 }
-void calculateTick(Player players[]) {
+
+void calculateTick(Player players[], MatchScore& score) {
     auto current = chrono::steady_clock::now();
     double frameTime = chrono::duration<double>(current - previous).count();
     previous = current;
     accumulator += frameTime;
     while (accumulator >= tickInterval) {
-        gameTick(players, 5, tickInterval);
+        gameTick(players, 10, tickInterval,score);
         tick++;
         ticksProcessed++;
         accumulator -= tickInterval;
@@ -72,9 +111,34 @@ void calculateTick(Player players[]) {
     this_thread::sleep_for(chrono::milliseconds(1));
 }
 
-void gameLoop(Player players[], std::atomic<bool>& gameRunning){
+void gameLoop(Player players[], std::atomic<bool>& gameRunning, MatchScore& score){
     while (gameRunning){
-        calculateTick(players);
+        calculateTick(players, score);
     }
 }
+void updateRound(const Player players[], int playerCount, MatchScore& score) {
+    lock_guard<mutex> lock(roundsMutex);
+    if (score.roundEnded) {
+        return;
+    }
 
+    RoundResult result = checkRoundResult(players, playerCount);
+    
+    if (result == RoundResult::Draw) {
+        score.ctScore++;
+        score.tScore++;
+        score.roundEnded = true;
+    }
+    else if (result == RoundResult::CTwin) {
+        score.ctScore++;
+        score.roundEnded = true;
+    }
+    else if (result == RoundResult::Twin) {
+        score.tScore++;
+        score.roundEnded = true;
+    }
+    else if (result !=RoundResult::Ongoing) {
+        score.roundEnded = true;
+    }
+
+}

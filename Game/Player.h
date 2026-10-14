@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <mutex>
+extern std::mutex playerMutex;
 struct Vector3
 {
     float x;

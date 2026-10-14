@@ -10,7 +10,7 @@ Renderer::Renderer(int width, int height)
     window.setFramerateLimit(144); /*lock fps до 144 кадров, если не сделать, то sfml может показывать 1500+ кадров, что не очень выглядит*/
 }
 
-void Renderer::render(const Player players[], int playerCount, std::atomic<bool>& gameRunning){
+void Renderer::render(const Player players[], int playerCount, std::atomic<bool>& gameRunning,MatchScore& score){
 
     sf::Font font;
     if (!font.openFromFile("assets/fonts/Jonova-Regular.ttf")) {
@@ -26,12 +26,14 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
 
     sf::Sprite mapSprite(mapTexture); /*создание de_mirage sprite */
 
-    Button start("Start", { 1024.0f, 500.0f }, { 200.0f,60.0f }, font);
-    Button quit("Quit", { 1024.0f, 565.0f }, { 200.0f,60.0f }, font);
+    Button start("Start", { 1024.0f, 200.0f }, { 200.0f,60.0f }, font);
+    Button quit("Quit", { 1024.0f, 265.0f }, { 200.0f,60.0f }, font);
 
 
     sf::Text fpstxt(font);
     sf::Text ticktxt(font);
+    sf::Text scoreText(font);
+;
 
     sf::Clock clock;
     std::deque<float> fpsHistory;
@@ -64,6 +66,26 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         fpstxt.setCharacterSize(20);
         fpstxt.setFillColor(sf::Color::Green);
         fpstxt.setPosition({ 0.f, 0.f });
+
+        // =========================
+        //     Отрисовка счета
+        // =========================
+        
+        scoreText.setCharacterSize(28);
+        scoreText.setFillColor(sf::Color::White);
+        scoreText.setPosition({ 450.f, 100.f });
+        int ctScore;
+        int tScore;
+
+        {
+            std::lock_guard<std::mutex> lock(roundsMutex);
+            ctScore = score.ctScore;
+            tScore = score.tScore;
+        }
+        scoreText.setString(
+            "CT  " + std::to_string(ctScore) +
+            " : " + std::to_string(tScore) + "  T"
+        );
 
         // =========================
         // Получение Tickrate из game.cpp
@@ -119,6 +141,7 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
             window.draw(playerShape);
             window.draw(nametxt);
         }
+        window.draw(scoreText);
         window.draw(fpstxt);
         window.draw(ticktxt);
         window.display();

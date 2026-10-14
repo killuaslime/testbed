@@ -11,7 +11,7 @@ class Renderer
 public:
     Renderer(int width, int height);
 
-    void render(const Player players[], int playerCount, std::atomic<bool>& gameRunning);
+    void render(const Player players[], int playerCount, std::atomic<bool>& gameRunning, MatchScore& score);
 
 private:
     sf::RenderWindow window;
