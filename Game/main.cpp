@@ -11,10 +11,13 @@
 using namespace std;
 
 SpawnManager spawnManager;
-
+MatchScore score;
 
 int main(){
     Player players[10];
+    std::atomic<bool> gameRunning = true;
+
+    //Player (name, team, health, positiion, velocity, acceleration, damage, isalive)
 
     players[0] = { "autostrafe. asaka", "CT", 100, {0, 0, 0},{0, 0, 0},{0, 0, 0}, 10,true };
     players[1] = { "gospodispasi Faqit", "CT", 100, {0, 0, 0},{0, 0, 0},{0, 0, 0}, 10,true };
@@ -26,14 +29,14 @@ int main(){
     players[7] = { "Mike", "T", 100, {0, 0, 0},{0, 0, 0},{0, 0, 0}, 15,true };
     players[8] = { "John", "T", 100, {0, 0, 0},{0, 0, 0},{0, 0, 0}, 20,true };
     players[9] = { "Alex", "T", 100, {0, 0, 0},{0, 0, 0},{0, 0, 0}, 10,true };
+
     for (int i = 0; i < 10; i++) {
         spawnManager.spawnPlayer(players[i], i % 5);
-    }
-    std::atomic<bool> gameRunning = true;
-    MatchScore score;
+    }  
 
     std::thread gameThread(gameLoop, players, std::ref(gameRunning),std::ref(score));
     //std::thread menuThread(mainMenu, players, std::ref(gameRunning));
+    /*включи поток меню и выключи поток рендера */
 
     std::thread renderThread([&]() {Renderer renderer(1920, 1080);renderer.render(players, 10, gameRunning,score);});
 
