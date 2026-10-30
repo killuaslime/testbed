@@ -1,9 +1,12 @@
 #include "Render.h"
 #include "Player.h"
 #include"Button.h"
+#include "Team.h"
 #include <iostream>
 #include <atomic>
 #include <deque>
+#include <mutex>
+
 Renderer::Renderer(int width, int height)
     : window(sf::VideoMode(sf::Vector2u{ static_cast<unsigned int>(width),static_cast<unsigned int>(height) }, 32), "CS2.exe")
 {
@@ -33,7 +36,7 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
     sf::Text fpstxt(font);
     sf::Text ticktxt(font);
     sf::Text scoreText(font);
-;
+    sf::Color color;
 
     sf::Clock clock;
     std::deque<float> fpsHistory;
@@ -108,17 +111,18 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
             bool alive;
             float x;
             float y;
-            std::string team;
+            Team team;
             std::string name;
 
             {
                 std::lock_guard<std::mutex> lock(playerMutex);
-
-                alive = players[i].isAlive;
-                x = players[i].position.x;
-                y = players[i].position.y;
-                name = players[i].name;
-                team = players[i].team;
+                color = players[i].getColor();
+                alive = players[i].isPlayerAlive();
+                Vector3 position = players[i].getPosition();
+                x = position.x;
+                y = position.y;
+                name = players[i].getName();
+                team = players[i].getTeam();
             }
 
             if (!alive)
@@ -127,16 +131,30 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
             nametxt.setString(name);
             nametxt.setCharacterSize(15);
             nametxt.setFillColor(sf::Color::White);
-            nametxt.setPosition({ x-35.0f, y});
             sf::CircleShape playerShape(8.f);
-            if (team == "CT") {
-                playerShape.setFillColor(sf::Color::Blue);
+            if (team == Team::CT) {
+                playerShape.setFillColor(color);
             }
-            else playerShape.setFillColor(sf::Color::Red);
+            else if (team == Team::T) {
+                playerShape.setFillColor(color);
+            }
+                
 
             playerShape.setPosition({
                 x,
                 y
+                });
+            sf::FloatRect textBounds = nametxt.getLocalBounds();
+
+            nametxt.setOrigin({
+                textBounds.position.x + textBounds.size.x / 2.0f,
+                textBounds.position.y
+                });
+
+            // Размещаем текст под игроком
+            nametxt.setPosition({
+                x + playerShape.getRadius(),
+                y + playerShape.getRadius() * 2.0f + 2.0f
                 });
             window.draw(playerShape);
             window.draw(nametxt);

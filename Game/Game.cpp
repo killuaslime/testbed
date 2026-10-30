@@ -22,7 +22,7 @@ auto statStart = chrono::steady_clock::now();
 void gameTick(Player players[], int playerCount, const float tickInterval, MatchScore& score) {
     for (int i = 0; i < playerCount;i++) {
 
-        updatePosition(players[i], tickInterval);
+        //updatePosition(players[i], tickInterval);
 
         // Здесь позже будут:
         // столкновения
@@ -40,10 +40,10 @@ RoundResult checkRoundResult(const Player players[], int playerCount)
 
     lock_guard<mutex> lock(playerMutex);
     for (int i = 0; i < playerCount; i++) {
-        if (players[i].isAlive && players[i].team == "CT") {
+        if (players[i].isPlayerAlive() && players[i].getTeam() == Team::CT) {
             aliveCT++;
         }
-        if (players[i].isAlive && players[i].team == "T") {
+        if (players[i].isPlayerAlive() && players[i].getTeam() == Team::T) {
             aliveT++;
         }
     }
