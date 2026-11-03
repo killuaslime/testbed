@@ -1,10 +1,10 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include "Player.h"
-#include "Game.h"
+#include "RenderIncludes.h"
+
 #include <mutex>
 #include <atomic>
+
 extern std::mutex playerMutex;
 class Renderer
 {
@@ -14,5 +14,11 @@ public:
     void render(const Player players[], int playerCount, std::atomic<bool>& gameRunning, MatchScore& score);
 
 private:
+private:
     sf::RenderWindow window;
+    sf::Font font;
+    MapRenderer mapRenderer;
+    HudRender hudRenderer;
+    ScoreRender scoreRenderer;
+    PlayerRender playerRenderer;
 };

@@ -1,41 +1,37 @@
 #include "Render.h"
-#include "Player.h"
-#include"Button.h"
+
+
 #include "Team.h"
 #include <iostream>
-#include <atomic>
+
 #include <deque>
-#include <mutex>
+
 
 Renderer::Renderer(int width, int height)
-    : window(sf::VideoMode(sf::Vector2u{ static_cast<unsigned int>(width),static_cast<unsigned int>(height) }, 32), "CS2.exe")
+    : window(sf::VideoMode(sf::Vector2u{
+        static_cast<unsigned int>(width),
+        static_cast<unsigned int>(height)
+        }, 32), "CS2.exe"),
+    hudRenderer(font),
+    scoreRenderer(font),
+    playerRenderer(font)
 {
-    window.setFramerateLimit(144); /*lock fps до 144 кадров, если не сделать, то sfml может показывать 1500+ кадров, что не очень выглядит*/
+    window.setFramerateLimit(144);
 }
 
 void Renderer::render(const Player players[], int playerCount, std::atomic<bool>& gameRunning,MatchScore& score){
 
-    sf::Font font;
     if (!font.openFromFile("assets/fonts/Jonova-Regular.ttf")) {
         std::cout << "Не удалось загрузить шрифт\n";
         return;
     }
-    sf::Texture mapTexture;
-    if (!mapTexture.loadFromFile("assets/maps/de_mirage.png"))
-    {
-        std::cerr << "Не удалось загрузить карту!\n";
+    if (!mapRenderer.loadMap()) {
         return;
     }
-
-    sf::Sprite mapSprite(mapTexture); /*создание de_mirage sprite */
 
     Button start("Start", { 1024.0f, 200.0f }, { 200.0f,60.0f }, font);
     Button quit("Quit", { 1024.0f, 265.0f }, { 200.0f,60.0f }, font);
 
-
-    sf::Text fpstxt(font);
-    sf::Text ticktxt(font);
-    sf::Text scoreText(font);
     sf::Color color;
 
     sf::Clock clock;
@@ -51,9 +47,6 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         quit.update(mousePosition);
 
 
-        // =========================
-        // Подсчет FPS, считаем среднее за 60 кадров
-        // =========================
         sf::Time elapsed = clock.restart();
         currentFPS = 1.0f / elapsed.asSeconds();
 
@@ -65,103 +58,26 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
             averageFPS += fps;
         averageFPS /= fpsHistory.size();
 
-        fpstxt.setString("FPS: "+ std::to_string(static_cast<int>(averageFPS))+ " rates");
-        fpstxt.setCharacterSize(20);
-        fpstxt.setFillColor(sf::Color::Green);
-        fpstxt.setPosition({ 0.f, 0.f });
-
-        // =========================
-        //     Отрисовка счета
-        // =========================
-        
-        scoreText.setCharacterSize(28);
-        scoreText.setFillColor(sf::Color::White);
-        scoreText.setPosition({ 450.f, 100.f });
-        int ctScore;
-        int tScore;
-
-        {
-            std::lock_guard<std::mutex> lock(roundsMutex);
-            ctScore = score.ctScore;
-            tScore = score.tScore;
-        }
-        scoreText.setString(
-            "CT  " + std::to_string(ctScore) +
-            " : " + std::to_string(tScore) + "  T"
-        );
-
-        // =========================
-        // Получение Tickrate из game.cpp
-        // =========================
         TickStats stats = getTickStats();
-        ticktxt.setString("Tickrate: " + std::to_string(static_cast<int>(stats.actualTickrate)));
-        ticktxt.setCharacterSize(20);
-        ticktxt.setFillColor(sf::Color::Green);
-        ticktxt.setPosition({ 0.f, 21.f });
+
+        hudRenderer.update(averageFPS, stats);
+
+        scoreRenderer.update(score);
 
         window.clear(sf::Color::Black);
-        // =========================
-        // Отрисовка игроков
-        // =========================
 
-        window.draw(mapSprite); /* отрисовка de_mirage.png */
+        mapRenderer.drawMap(window);
+
         start.draw(window);
         quit.draw(window);
-        for (int i = 0; i < playerCount; i++) {
-            bool alive;
-            float x;
-            float y;
-            Team team;
-            std::string name;
 
-            {
-                std::lock_guard<std::mutex> lock(playerMutex);
-                color = players[i].getColor();
-                alive = players[i].isPlayerAlive();
-                Vector3 position = players[i].getPosition();
-                x = position.x;
-                y = position.y;
-                name = players[i].getName();
-                team = players[i].getTeam();
-            }
+        playerRenderer.update(players, playerCount);
+        playerRenderer.drawPlayers(window);
 
-            if (!alive)
-                continue;
-            sf::Text nametxt(font);
-            nametxt.setString(name);
-            nametxt.setCharacterSize(15);
-            nametxt.setFillColor(sf::Color::White);
-            sf::CircleShape playerShape(8.f);
-            if (team == Team::CT) {
-                playerShape.setFillColor(color);
-            }
-            else if (team == Team::T) {
-                playerShape.setFillColor(color);
-            }
-                
+        scoreRenderer.drawScore(window);
 
-            playerShape.setPosition({
-                x,
-                y
-                });
-            sf::FloatRect textBounds = nametxt.getLocalBounds();
+        hudRenderer.drawHud(window);
 
-            nametxt.setOrigin({
-                textBounds.position.x + textBounds.size.x / 2.0f,
-                textBounds.position.y
-                });
-
-            // Размещаем текст под игроком
-            nametxt.setPosition({
-                x + playerShape.getRadius(),
-                y + playerShape.getRadius() * 2.0f + 2.0f
-                });
-            window.draw(playerShape);
-            window.draw(nametxt);
-        }
-        window.draw(scoreText);
-        window.draw(fpstxt);
-        window.draw(ticktxt);
         window.display();
     }
 

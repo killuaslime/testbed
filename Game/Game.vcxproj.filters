@@ -13,57 +13,114 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{c27596ba-5e8e-4915-94da-f536f0f0926b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{e3d48614-ef0c-4635-9dfc-02d1de110de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Spawn Manager">
+      <UniqueIdentifier>{b0eeb8b8-bc6d-4eea-8449-4beb067e7656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Weapon">
+      <UniqueIdentifier>{46d43269-51a5-4021-bc90-eec5089c144e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{3406c768-dbe4-4e19-949c-90ff8d478f75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\mapRenderer">
+      <UniqueIdentifier>{7bc80444-f7e1-4864-8dea-93dded91888a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\HudRender">
+      <UniqueIdentifier>{922a1170-7e05-4761-a7b7-e673a61bb5aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\scoreRender">
+      <UniqueIdentifier>{167b2ceb-4273-41df-a503-f10c0c0576a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\playerRender">
+      <UniqueIdentifier>{bab7c763-0621-4710-95ca-7dd1678c935f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\MenuRender">
+      <UniqueIdentifier>{3644cafd-dfc7-46ec-9179-f04cd33f62cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Render.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="SpawnManager.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Player\Spawn Manager</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="MapRenderer.cpp">
+      <Filter>Render\mapRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="HudRenderer.cpp">
+      <Filter>Render\HudRender</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreRender.cpp">
+      <Filter>Render\scoreRender</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRender.cpp">
+      <Filter>Render\playerRender</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Render\MenuRender</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Render.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="SpawnPoint.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="SpawnManager.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Player\Spawn Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Loadout.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="SpawnPoint.h">
+      <Filter>Player\Spawn Manager</Filter>
     </ClInclude>
     <ClInclude Include="Team.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Loadout.h">
+      <Filter>Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="MapRenderer.h">
+      <Filter>Render\mapRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="HudRenderer.h">
+      <Filter>Render\HudRender</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderIncludes.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreRender.h">
+      <Filter>Render\scoreRender</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRender.h">
+      <Filter>Render\playerRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Render\MenuRender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

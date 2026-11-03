@@ -140,19 +140,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="HudRenderer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="MapRenderer.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerRender.cpp" />
     <ClCompile Include="Render.cpp" />
+    <ClCompile Include="ScoreRender.cpp" />
     <ClCompile Include="SpawnManager.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HudRenderer.h" />
     <ClInclude Include="Loadout.h" />
+    <ClInclude Include="MapRenderer.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerRender.h" />
     <ClInclude Include="Render.h" />
+    <ClInclude Include="RenderIncludes.h" />
+    <ClInclude Include="ScoreRender.h" />
     <ClInclude Include="SpawnManager.h" />
     <ClInclude Include="SpawnPoint.h" />
     <ClInclude Include="Team.h" />
