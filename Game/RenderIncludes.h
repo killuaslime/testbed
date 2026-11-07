@@ -11,5 +11,5 @@
 #include "HudRenderer.h"
 #include "ScoreRender.h"
 #include "PlayerRender.h"
-//#include "MenuRenderer.h"
+#include "MenuRender.h"
 

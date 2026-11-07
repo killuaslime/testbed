@@ -78,6 +78,9 @@
     <ClCompile Include="Button.cpp">
       <Filter>Render\MenuRender</Filter>
     </ClCompile>
+    <ClCompile Include="MenuRender.cpp">
+      <Filter>Render\MenuRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -120,6 +123,12 @@
       <Filter>Render\playerRender</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
+      <Filter>Render\MenuRender</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Render\MenuRender</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuRender.h">
       <Filter>Render\MenuRender</Filter>
     </ClInclude>
   </ItemGroup>

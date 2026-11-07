@@ -1,4 +1,5 @@
 #include "Button.h"
+#include <iostream>
 Button::Button(
     const std::string& label,
     sf::Vector2f position,
@@ -10,9 +11,19 @@ Button::Button(
     shape.setPosition(position);
     shape.setFillColor(sf::Color(187, 137, 210));
     text.setString(label);
+    text.setCharacterSize(24);
     text.setFillColor(sf::Color::Black);
-    text.setOrigin(text.getLocalBounds().getCenter());
-    text.setPosition({position.x + size.x / 2.0f, position.y + size.y / 2.0f});
+    sf::FloatRect bounds = text.getLocalBounds();
+
+    text.setOrigin({
+        bounds.position.x + bounds.size.x / 2.f,
+        bounds.position.y + bounds.size.y / 2.f
+        });
+
+    text.setPosition({
+        position.x + size.x / 2.f,
+        position.y + size.y / 2.f
+        });
 }
 void Button::draw(sf::RenderWindow& window) {
     window.draw(shape);
@@ -31,4 +42,8 @@ void Button::update(sf::Vector2f mousePosition)
         // Курсор вне кнопки
         shape.setFillColor(sf::Color{ 187, 137, 210 });
     }
+}
+
+bool Button::isMouseOver(sf::Vector2f mousePosition) const {
+    return shape.getGlobalBounds().contains(mousePosition);
 }

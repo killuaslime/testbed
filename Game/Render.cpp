@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include <deque>
+#include <optional>
 
 
 Renderer::Renderer(int width, int height)
@@ -14,7 +15,8 @@ Renderer::Renderer(int width, int height)
         }, 32), "CS2.exe"),
     hudRenderer(font),
     scoreRenderer(font),
-    playerRenderer(font)
+    playerRenderer(font),
+    menuRenderer()
 {
     window.setFramerateLimit(144);
 }
@@ -29,22 +31,19 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         return;
     }
 
-    Button start("Start", { 1024.0f, 200.0f }, { 200.0f,60.0f }, font);
-    Button quit("Quit", { 1024.0f, 265.0f }, { 200.0f,60.0f }, font);
-
-    sf::Color color;
-
     sf::Clock clock;
     std::deque<float> fpsHistory;
     float currentFPS = 0.0f;
     while (gameRunning) {
-        // =========================
-        // Обработка кнопок при наведении
-        // =========================
+        menuRenderer.initialize(font);
         sf::Vector2i mousePixel = sf::Mouse::getPosition(window);
         sf::Vector2f mousePosition = window.mapPixelToCoords(mousePixel);
-        start.update(mousePosition);
-        quit.update(mousePosition);
+
+
+        while (const std::optional event = window.pollEvent()){
+            menuRenderer.handleEvent(*event, window, gameRunning);
+        }
+
 
 
         sf::Time elapsed = clock.restart();
@@ -61,22 +60,17 @@ void Renderer::render(const Player players[], int playerCount, std::atomic<bool>
         TickStats stats = getTickStats();
 
         hudRenderer.update(averageFPS, stats);
-
         scoreRenderer.update(score);
+        menuRenderer.update(mousePosition);
 
-        window.clear(sf::Color::Black);
+        window.clear();
 
         mapRenderer.drawMap(window);
-
-        start.draw(window);
-        quit.draw(window);
-
         playerRenderer.update(players, playerCount);
         playerRenderer.drawPlayers(window);
-
         scoreRenderer.drawScore(window);
-
         hudRenderer.drawHud(window);
+        menuRenderer.draw(window);
 
         window.display();
     }

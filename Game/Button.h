@@ -12,4 +12,5 @@ public:
 	Button(const std::string& label, sf::Vector2f position, sf::Vector2f size, const sf::Font& font);
 	void draw(sf::RenderWindow& window);
 	void update(sf::Vector2f mousePosition);
+	bool isMouseOver(sf::Vector2f mousePosition) const;
 };

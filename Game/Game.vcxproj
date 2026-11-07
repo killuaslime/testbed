@@ -144,6 +144,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MapRenderer.cpp" />
+    <ClCompile Include="MenuRender.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerRender.cpp" />
     <ClCompile Include="Render.cpp" />
@@ -157,6 +158,8 @@
     <ClInclude Include="HudRenderer.h" />
     <ClInclude Include="Loadout.h" />
     <ClInclude Include="MapRenderer.h" />
+    <ClInclude Include="MenuRender.h" />
+    <ClInclude Include="MenuState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerRender.h" />
     <ClInclude Include="Render.h" />

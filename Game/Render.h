@@ -21,4 +21,5 @@ private:
     HudRender hudRenderer;
     ScoreRender scoreRenderer;
     PlayerRender playerRenderer;
+    MenuRender menuRenderer;
 };
